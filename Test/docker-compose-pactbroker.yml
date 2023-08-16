@@ -27,5 +27,16 @@ services:
       PACT_BROKER_DATABASE_HOST: pact-broker-postgres
       PACT_BROKER_DATABASE_NAME: postgres
       PACT_BROKER_LOG_LEVEL: DEBUG
+      jenkins:
+        # image: jenkins/jenkins
+        build: .
+        ports:
+          - 8080:8080
+          - 50000:50000
+        depends_on:
+          - pact-broker
+        environment:
+          PACT_BROKER_BASE_URL: http://localhost:9292
+
 volumes:
   postgres-volume:
